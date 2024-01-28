@@ -1,34 +1,32 @@
-#!/usr/bin/env python3
-
+#!/usr/bin/python3
+# library to get arguments
 import sys
 
-def factorize_number(number):
-    for i in range(2, int(number**0.5) + 1):
-        if number % i == 0:
-            return i, number // i
-    return number, 1
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: {} <file>".format(sys.argv[0]))
-        sys.exit(1)
-
-    input_file = sys.argv[1]
-
+# fn unpack number factorial
+def fc():
+    """
+    function fc to search file to convert number and format n=p*q
+    """
     try:
-        with open(input_file, 'r') as file:
-            numbers = [int(line.strip()) for line in file.readlines()]
+        revfile = sys.argv[1]
+        with open(revfile) as f:
+            for revnumber in f:
+                revnumber = int(revnumber)
+                if revnumber % 2 == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // 2, 2))
+                        continue
+                i = 3
+                while i < revnumber // 2:
+                    if revnumber % i == 0:
+                        print("{}={}*{}".format(revnumber, revnumber // i, i))
+                        break
+                    i = i + 2
+                if i == (revnumber // 2) + 1:
+                    print("{}={}*{}".format(revnumber, revnumber, 1))
+    except (IndexError):
+        pass
 
-        for number in numbers:
-            factor1, factor2 = factorize_number(number)
-            print("{}={}*{}".format(number, factor1, factor2))
 
-    except FileNotFoundError:
-        print("Error: File not found.")
-        sys.exit(1)
-    except ValueError:
-        print("Error: Invalid number in the file.")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    main()
+# autostart
+fc()
